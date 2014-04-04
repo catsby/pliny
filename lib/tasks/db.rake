@@ -1,4 +1,18 @@
 namespace :db do
+  desc "Create local postgres db indicated by DATABASE_URL"
+  task :create => :environment do
+    url  = URI.parse(ENV["DATABASE_URL"])
+    name = url.path[1..-1]
+
+    # connect to the main postgres database
+    db = Sequel.connect("postgres://localhost/postgres")
+    begin
+      db.run(%{CREATE DATABASE "#{name}" ENCODING 'utf8'})
+    rescue Sequel::DatabaseError => e
+      raise unless e.message =~ /already exists/
+    end
+  end
+
   desc "Run database migrations"
   task :migrate, :env do |cmd, args|
     env = args[:env] || "development"
