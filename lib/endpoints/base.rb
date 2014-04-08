@@ -10,10 +10,13 @@ module Endpoints
     end
 
     # Set secure headers for each endpoint.
-    # If you only want this for certain endpoints, include
-    # `set_csp_header` in the specific routes
+    # To restrict to certian routes, call the methods explicitly per route
     before do
       set_csp_header
+      set_hsts_header
+      set_x_frame_options_header
+      set_x_xss_protection_header
+      set_x_content_type_options_header
     end
 
     not_found do
