@@ -13,6 +13,10 @@ gem "sinatra", require: "sinatra/base"
 gem "sinatra-contrib", require: ["sinatra/namespace", "sinatra/reloader"]
 gem "sinatra-router"
 
+# Secure Headers for headers that are related to security
+# https://github.com/twitter/secureheaders
+gem 'secure_headers', require: "secure_headers"
+
 group :test do
   gem "rack-test"
   gem "rr", require: false
