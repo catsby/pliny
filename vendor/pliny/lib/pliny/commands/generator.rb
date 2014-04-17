@@ -3,10 +3,8 @@ require "fileutils"
 require "ostruct"
 require "active_support/inflector"
 
-module Pliny
+module Pliny::Commands
   class Generator
-    attr_accessor :args, :stream
-
     def self.run(args, stream=$stdout)
       new(args).run!
     end
@@ -14,26 +12,6 @@ module Pliny
     def initialize(args={}, stream=$stdout)
       @args = args
       @stream = stream
-    end
-
-    def type
-      @args.first
-    end
-
-    def name
-      args[1]
-    end
-
-    def class_name
-      name.camelize
-    end
-
-    def table_name
-      name.tableize
-    end
-
-    def display(msg)
-      stream.puts msg
     end
 
     def run!
@@ -56,6 +34,30 @@ module Pliny
       else
         abort("Don't know how to generate '#{type}'.")
       end
+    end
+
+    private
+
+    attr_accessor :args, :stream
+
+    def type
+      args.first
+    end
+
+    def name
+      args[1]
+    end
+
+    def class_name
+      name.camelize
+    end
+
+    def table_name
+      name.tableize
+    end
+
+    def display(msg)
+      stream.puts msg
     end
 
     def create_endpoint
@@ -115,7 +117,7 @@ module Pliny
     end
 
     def render_template(template_file, destination_path, vars={})
-      template_path = File.dirname(__FILE__) + "/templates/#{template_file}"
+      template_path = File.dirname(__FILE__) + "/../templates/#{template_file}"
       template = ERB.new(File.read(template_path))
       FileUtils.mkdir_p(File.dirname(destination_path))
       File.open(destination_path, "w") do |f|
