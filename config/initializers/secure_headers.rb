@@ -6,5 +6,8 @@
   config.x_frame_options = 'DENY'
   config.x_content_type_options = "nosniff"
   config.x_xss_protection = {:value => 1, :mode => false}
-  config.csp = {:default_src => "'none'"}
+  config.csp = {
+    default_src: 'https://*',
+    img_src: 'https://*'
+  }
 end
