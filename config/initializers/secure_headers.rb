@@ -7,7 +7,7 @@
   config.x_content_type_options = "nosniff"
   config.x_xss_protection = {:value => 1, :mode => false}
   config.csp = {
-    default_src: 'https://*',
+    default_src: 'https://* self',
     img_src: 'https://*'
   }
 end
