@@ -7,6 +7,7 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::Timeout, timeout: 45
   use Rack::Deflater
   use Rack::MethodOverride
+  use Rack::SSL unless ENV['RACK_ENV'] == 'development'
 
   use Sinatra::Router do
     # mount all individual Sinatra apps here

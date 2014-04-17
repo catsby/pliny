@@ -15,7 +15,6 @@ module Endpoints
       set_csp_header
       set_hsts_header
       set_x_frame_options_header
-      set_x_xss_protection_header
       set_x_content_type_options_header
     end
 
